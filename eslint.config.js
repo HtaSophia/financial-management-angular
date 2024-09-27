@@ -33,11 +33,13 @@ module.exports = tseslint.config(
                 },
             ],
         },
+        ignores: ['node_modules/', '.git/', '.vscode/', 'dist/'],
     },
     {
         files: ['**/*.html'],
         extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
         rules: {},
+        ignores: ['src/index.html'],
     },
     eslintConfigPrettier,
     eslintPluginPrettierRecommended
