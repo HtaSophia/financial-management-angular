@@ -28,7 +28,7 @@ module.exports = tseslint.config(
                 'error',
                 {
                     type: 'element',
-                    prefix: 'app',
+                    prefix: 'fm',
                     style: 'kebab-case',
                 },
             ],
