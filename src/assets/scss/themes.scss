@@ -1,0 +1,33 @@
+@use 'sass:meta';
+@use '@angular/material' as mat;
+
+$theme: mat.define-theme(
+    (
+        color: (
+            theme-type: light,
+            primary: mat.$azure-palette,
+            tertiary: mat.$blue-palette,
+        ),
+    )
+);
+
+html {
+    @include mat.all-component-themes($theme);
+
+    mat-sidenav {
+        --mat-sidenav-container-background-color: #{mat.get-theme-color($theme, primary, 100)};
+
+        & mat-toolbar {
+            --mat-toolbar-container-background-color: #{mat.get-theme-color($theme, primary, 100)};
+            --mat-toolbar-container-text-color: #{mat.get-theme-color($theme, primary, 40)};
+        }
+    }
+
+    mat-sidenav-content {
+        mat-toolbar {
+            --mat-toolbar-container-background-color: #{mat.get-theme-color($theme, primary, 40)};
+            --mat-toolbar-container-text-color: #{mat.get-theme-color($theme, primary, 100)};
+            --mdc-icon-button-icon-color: #{mat.get-theme-color($theme, primary, 100)};
+        }
+    }
+}
