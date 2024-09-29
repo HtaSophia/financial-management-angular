@@ -1,0 +1,26 @@
+.sidenav-container {
+    height: 100%;
+
+    main {
+        padding: 2rem;
+    }
+
+    .mat-sidenav {
+        width: 200px;
+        border-radius: 0;
+        box-shadow: rgba(0, 0, 0, 0.2) 1px 0 4px;
+    }
+
+    .mat-toolbar {
+        border-radius: 0 !important;
+        justify-content: space-between;
+
+        .user-actions {
+            flex: 1;
+
+            button {
+                float: right;
+            }
+        }
+    }
+}

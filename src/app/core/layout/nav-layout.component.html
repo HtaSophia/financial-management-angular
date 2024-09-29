@@ -1,0 +1,50 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+        #drawer
+        class="sidenav"
+        fixedInViewport
+        [attr.role]="isMobile() ? 'dialog' : 'navigation'"
+        [mode]="isMobile() ? 'over' : 'side'"
+        [opened]="isMobile() === false"
+    >
+        <mat-toolbar>FinDash</mat-toolbar>
+        <mat-nav-list>
+            <a
+                mat-list-item
+                [routerLink]="['dashboard']"
+                routerLinkActive
+                #dashboardRla="routerLinkActive"
+                [activated]="dashboardRla.isActive"
+                >Dashboard</a
+            >
+            <a
+                mat-list-item
+                [routerLink]="['transactions']"
+                routerLinkActive
+                #transactionsRla="routerLinkActive"
+                [activated]="transactionsRla.isActive"
+                >Transactions</a
+            >
+        </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar>
+            @if (isMobile()) {
+                <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+                    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+                </button>
+            }
+
+            <div class="user-actions">
+                <button type="button" aria-label="User log out" mat-icon-button>
+                    <mat-icon aria-label="User log out icon">logout</mat-icon>
+                </button>
+            </div>
+        </mat-toolbar>
+
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>
