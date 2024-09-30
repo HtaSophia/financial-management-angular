@@ -30,4 +30,9 @@ html {
             --mdc-icon-button-icon-color: #{mat.get-theme-color($theme, primary, 100)};
         }
     }
+
+    .mat-mdc-table,
+    .mat-mdc-paginator {
+        background-color: #{mat.get-theme-color($theme, primary, 100)};
+    }
 }
