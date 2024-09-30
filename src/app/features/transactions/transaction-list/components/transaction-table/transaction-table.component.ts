@@ -1,0 +1,65 @@
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    Input,
+    Output,
+    EventEmitter,
+    OnChanges,
+    SimpleChanges,
+    WritableSignal,
+    signal,
+} from '@angular/core';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatSortModule, Sort } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { TablePageState, TableSortState } from './transaction-table.model';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Transaction } from '../../../shared/transaction.model';
+import { TRANSACTION_TABLE_COLUMNS, TRANSACTION_TABLE_PAGE_SIZE_OPTIONS } from '../../transaction-list.constant';
+
+@Component({
+    selector: 'fm-transaction-table',
+    standalone: true,
+    imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatProgressSpinnerModule],
+    templateUrl: './transaction-table.component.html',
+    styles: '.container { display: flex; justify-content: center; align-items: center; }',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class TransactionTableComponent implements OnChanges {
+    @Input() public data: Transaction[] = [];
+    @Input() public isLoading = false;
+    @Output() public pageChange = new EventEmitter<TablePageState>();
+    @Output() public sortChange = new EventEmitter<TableSortState>();
+
+    public readonly displayedColumns: string[] = TRANSACTION_TABLE_COLUMNS;
+    public readonly pageSizeOptions: number[] = TRANSACTION_TABLE_PAGE_SIZE_OPTIONS;
+    public page: WritableSignal<PageEvent> = signal({ pageIndex: 0, pageSize: 5, length: 0 });
+    public sort: WritableSignal<Sort> = signal({ active: '', direction: '' });
+
+    private liveAnnouncer = inject(LiveAnnouncer);
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['data']) {
+            this.page.update((pageState) => ({ ...pageState, length: changes['data'].currentValue.length }));
+        }
+    }
+
+    public onSortChange(sortState: Sort) {
+        //  Announce the change in sort state for assistive technology.
+        if (sortState.direction) {
+            this.liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+        } else {
+            this.liveAnnouncer.announce('Sorting cleared');
+        }
+
+        this.sort.set(sortState);
+        this.sortChange.emit(sortState);
+    }
+
+    public onPageChange(pageEvent: PageEvent) {
+        this.page.set({ ...pageEvent });
+        this.pageChange.emit({ pageIndex: pageEvent.pageIndex, pageSize: pageEvent.pageSize });
+    }
+}
