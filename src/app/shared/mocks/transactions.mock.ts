@@ -33,7 +33,7 @@ export const TRANSACTIONS_DATA: Transaction[] = [
     },
     {
         id: '5',
-        date: '2024-02-05T00:00:00.000-04:00',
+        date: '2024-09-04T00:00:00.000-04:00',
         type: 'income',
         amount: 550,
     },

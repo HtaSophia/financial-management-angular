@@ -1,1 +1,32 @@
-<p>dashboard works!</p>
+<header>
+    <h1>Dashboard</h1>
+</header>
+
+<section class="cards">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Total Incomes</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>{{ totalOverview().income | currency: 'BRL' }}</mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Total Incomes</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>{{ totalOverview().outcome | currency: 'BRL' }}</mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Total Incomes</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>{{ totalOverview().total | currency: 'BRL' }}</mat-card-content>
+    </mat-card>
+</section>
+
+<section class="transactions-chart">
+    <mat-card>
+        <mat-card-content>
+            <canvas id="canvas">{{ chart }}</canvas>
+        </mat-card-content>
+    </mat-card>
+</section>
