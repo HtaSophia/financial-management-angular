@@ -4,7 +4,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable, Subscription } from 'rxjs';
 
 import { TransactionService } from '../shared/transaction.service';
-import { Transaction } from '../shared/transaction.model';
+import { Transaction } from '../../../shared/models/transaction.model';
 
 import { TablePageState, TableSortState } from './components/transaction-table/transaction-table.model';
 import { TransactionTableComponent } from './components/transaction-table/transaction-table.component';

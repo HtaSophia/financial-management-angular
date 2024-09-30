@@ -16,7 +16,7 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { TablePageState, TableSortState } from './transaction-table.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Transaction } from '../../../shared/transaction.model';
+import { Transaction } from '../../../../../shared/models/transaction.model';
 import { TRANSACTION_TABLE_COLUMNS, TRANSACTION_TABLE_PAGE_SIZE_OPTIONS } from '../../transaction-list.constant';
 
 @Component({
