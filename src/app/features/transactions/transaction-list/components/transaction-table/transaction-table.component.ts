@@ -11,20 +11,36 @@ import {
     WritableSignal,
     signal,
 } from '@angular/core';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatChipsModule } from '@angular/material/chips';
+
 import { TablePageState, TableSortState } from './transaction-table.model';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Transaction } from '../../../../../shared/models/transaction.model';
 import { TRANSACTION_TABLE_COLUMNS, TRANSACTION_TABLE_PAGE_SIZE_OPTIONS } from '../../transaction-list.constant';
+import { Transaction } from '../../../../../shared/models/transaction.model';
+
+const IMPORTS = [
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
+    MatChipsModule,
+    CurrencyPipe,
+    DatePipe,
+];
 
 @Component({
     selector: 'fm-transaction-table',
     standalone: true,
-    imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatProgressSpinnerModule],
+    imports: IMPORTS,
     templateUrl: './transaction-table.component.html',
-    styles: '.container { display: flex; justify-content: center; align-items: center; }',
+    styles: [
+        '.container { display: flex; justify-content: center; align-items: center; }',
+        '.table-container { overflow-x: auto; }',
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TransactionTableComponent implements OnChanges {
