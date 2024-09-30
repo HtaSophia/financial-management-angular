@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './core/auth/pages/login/login.component';
+import { TransactionService } from './features/transactions/shared/transaction.service';
 
 export const routes: Routes = [
     {
@@ -15,6 +16,7 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () => import('./core/layout/nav-layout.component').then((mod) => mod.NavLayoutComponent),
+        providers: [TransactionService],
         children: [
             {
                 path: 'dashboard',
