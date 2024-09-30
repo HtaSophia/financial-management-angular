@@ -32,7 +32,8 @@ html {
     }
 
     .mat-mdc-table,
-    .mat-mdc-paginator {
+    .mat-mdc-paginator,
+    .mat-mdc-card {
         background-color: #{mat.get-theme-color($theme, primary, 100)};
     }
 }
