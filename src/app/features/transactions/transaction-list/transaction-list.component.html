@@ -1,1 +1,12 @@
-<p>transaction-list works!</p>
+<div>
+    <header>
+        <h1>Transactions</h1>
+    </header>
+
+    <fm-transaction-table
+        [data]="transactions()"
+        [isLoading]="isLoading()"
+        (pageChange)="onPageChange($event)"
+        (sortChange)="onSortChange($event)"
+    ></fm-transaction-table>
+</div>
