@@ -1,16 +1,17 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, OnDestroy, WritableSignal, signal } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable, Subscription } from 'rxjs';
 import Chart from 'chart.js/auto';
 
 import { DashboardService } from './dashboard.service';
 import { MonthlyOverview, TotalOverview, TransactionsOverview } from './models/dashboard.model';
-import { CurrencyPipe } from '@angular/common';
 
 @Component({
     selector: 'fm-dashboard',
     standalone: true,
-    imports: [MatCardModule, CurrencyPipe],
+    imports: [MatCardModule, MatProgressSpinnerModule, CurrencyPipe],
     providers: [DashboardService],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss',
@@ -18,16 +19,21 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     public chart?: Chart;
+    public isLoading: WritableSignal<boolean> = signal(true);
     public totalOverview: WritableSignal<TotalOverview> = signal({ income: 0, outcome: 0, total: 0 });
 
     private readonly dashboardService = inject(DashboardService);
     private subscription?: Subscription;
 
     ngOnInit() {
-        this.subscription = this.getMonthlyOverview().subscribe((overview) => {
-            console.log(overview);
-            this.chart = this.generateBarChart(overview.monthly);
-            this.totalOverview.set(overview.total);
+        this.subscription = this.getMonthlyOverview().subscribe({
+            next: (overview) => {
+                this.chart = this.generateBarChart(overview.monthly);
+                this.totalOverview.set(overview.total);
+            },
+            complete: () => {
+                this.isLoading.set(false);
+            },
         });
     }
 
