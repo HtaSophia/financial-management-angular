@@ -36,4 +36,8 @@ html {
     .mat-mdc-card {
         background-color: #{mat.get-theme-color($theme, primary, 100)};
     }
+
+    .mat-elevation-z8 {
+        border-radius: 0.5rem;
+    }
 }
