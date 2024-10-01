@@ -1,0 +1,36 @@
+.container {
+    height: 100%;
+    background: rgb(72, 198, 239);
+    background: linear-gradient(0deg, rgba(72, 198, 239, 1) 35%, rgba(111, 134, 214, 1) 100%);
+
+    h1 {
+        text-align: center;
+    }
+
+    section {
+        width: clamp(200px, 30%, 350px);
+        padding: 4rem;
+        background-color: white;
+        border-radius: 0.5rem;
+
+        .form {
+            gap: 0.5rem;
+
+            .mat-mdc-form-field {
+                width: 100%;
+            }
+
+            button {
+                margin-top: 1rem;
+            }
+        }
+    }
+}
+
+.container,
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

@@ -1,0 +1,35 @@
+<div class="container">
+    <section class="mat-elevation-z1">
+        <header>
+            <h1>Login</h1>
+        </header>
+
+        <form class="form">
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" id="email" name="email" [formControl]="emailControl" required />
+                @if (emailControl.invalid && (emailControl.dirty || emailControl.touched)) {
+                    <mat-error>Email is required</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input
+                    matInput
+                    type="password"
+                    id="password"
+                    name="password"
+                    [formControl]="passwordControl"
+                    required
+                    minlength="8"
+                />
+                @if (passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)) {
+                    <mat-error>Password must be at least 8 characters</mat-error>
+                }
+            </mat-form-field>
+
+            <button type="submit" mat-flat-button (click)="onSubmit()">Sign in</button>
+        </form>
+    </section>
+</div>
