@@ -1,7 +1,11 @@
-<div>
-    <header>
-        <h1>Transactions</h1>
-    </header>
+<header>
+    <h1>Transactions</h1>
+</header>
+
+<section>
+    <div class="actions">
+        <a class="button" [routerLink]="['form']" mat-flat-button>Add Transaction</a>
+    </div>
 
     <fm-transaction-table
         [data]="transactions()"
@@ -9,4 +13,4 @@
         (pageChange)="onPageChange($event)"
         (sortChange)="onSortChange($event)"
     ></fm-transaction-table>
-</div>
+</section>

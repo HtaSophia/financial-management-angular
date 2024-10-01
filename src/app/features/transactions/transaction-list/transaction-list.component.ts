@@ -1,20 +1,21 @@
-import { Component, effect, inject, OnDestroy, signal, untracked, WritableSignal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Component, effect, inject, OnDestroy, signal, untracked, WritableSignal } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-
-import { TransactionService } from '../shared/transaction.service';
-import { Transaction } from '../../../shared/models/transaction.model';
+import { RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TablePageState, TableSortState } from './components/transaction-table/transaction-table.model';
 import { TransactionTableComponent } from './components/transaction-table/transaction-table.component';
+import { TransactionService } from '../shared/transaction.service';
+import { Transaction } from '../../../shared/models/transaction.model';
 
 @Component({
     selector: 'fm-transaction-list',
     standalone: true,
-    imports: [MatProgressSpinnerModule, AsyncPipe, TransactionTableComponent],
+    imports: [MatButtonModule, MatProgressSpinnerModule, AsyncPipe, TransactionTableComponent, RouterModule],
     templateUrl: './transaction-list.component.html',
-    styleUrl: './transaction-list.component.scss',
+    styles: '.actions { display: flex; justify-content: flex-end; margin-bottom: 1rem; }',
 })
 export class TransactionListComponent implements OnDestroy {
     public transactions: WritableSignal<Transaction[]> = signal([]);
@@ -34,13 +35,8 @@ export class TransactionListComponent implements OnDestroy {
                 this.isLoading.set(true);
                 if (this.subscription) this.subscription.unsubscribe();
                 this.subscription = this.getTransactions(page, sort).subscribe({
-                    next: (transactions) => {
-                        console.log('TRANSACTIONS', typeof transactions);
-                        this.transactions.set(transactions);
-                    },
-                    complete: () => {
-                        this.isLoading.set(false);
-                    },
+                    next: (transactions) => this.transactions.set(transactions),
+                    complete: () => this.isLoading.set(false),
                 });
             });
         });
