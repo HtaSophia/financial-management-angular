@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@ngrx/store": "^18.0.2",
+    "@ngrx/store-devtools": "^18.0.2",
     "chart.js": "^4.4.4",
     "export-to-csv": "^1.4.0",
     "jspdf": "^2.5.2",
