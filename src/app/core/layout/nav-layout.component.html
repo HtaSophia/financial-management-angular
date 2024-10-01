@@ -36,11 +36,10 @@
                 </button>
             }
 
-            <div class="user-actions">
-                <button type="button" aria-label="Log out user" mat-icon-button (click)="onLogout()">
-                    <mat-icon aria-label="User log out icon">logout</mat-icon>
-                </button>
-            </div>
+            <span>{{ username() }}</span>
+            <button class="logout-button" type="button" aria-label="Log out user" mat-icon-button (click)="onLogout()">
+                <mat-icon aria-label="User log out icon">logout</mat-icon>
+            </button>
         </mat-toolbar>
 
         <main>

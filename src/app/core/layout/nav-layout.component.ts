@@ -27,7 +27,8 @@ import { AuthService } from '../auth/auth.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavLayoutComponent implements OnInit, OnDestroy {
-    public isMobile = signal(false);
+    public readonly isMobile = signal(false);
+    public readonly username = signal('');
 
     private readonly breakpointObserver = inject(BreakpointObserver);
     private readonly authService = inject(AuthService);
@@ -38,6 +39,8 @@ export class NavLayoutComponent implements OnInit, OnDestroy {
         this.subscription = this.breakpointObserver.observe(Breakpoints.Handset).subscribe(({ matches: isHandset }) => {
             this.isMobile.set(isHandset);
         });
+
+        this.username.set(this.authService.user?.username || '');
     }
 
     ngOnDestroy() {
