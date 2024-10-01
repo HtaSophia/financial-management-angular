@@ -24,16 +24,12 @@
                 </ng-container>
 
                 <ng-container matColumnDef="description">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Description">
-                        Description
-                    </th>
+                    <th mat-header-cell *matHeaderCellDef>Description</th>
                     <td mat-cell *matCellDef="let transaction">{{ transaction.description }}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="categories">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Categories">
-                        Categories
-                    </th>
+                    <th mat-header-cell *matHeaderCellDef>Categories</th>
                     <td mat-cell *matCellDef="let transaction">
                         <mat-chip-set aria-label="Categories labels">
                             @for (category of transaction.categories; track category) {

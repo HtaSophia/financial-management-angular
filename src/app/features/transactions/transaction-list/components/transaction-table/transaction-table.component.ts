@@ -12,24 +12,24 @@ import {
     signal,
 } from '@angular/core';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { MatChipsModule } from '@angular/material/chips';
 
 import { TablePageState, TableSortState } from './transaction-table.model';
 import { TRANSACTION_TABLE_COLUMNS, TRANSACTION_TABLE_PAGE_SIZE_OPTIONS } from '../../transaction-list.constant';
 import { Transaction } from '../../../../../shared/models/transaction.model';
 
 const IMPORTS = [
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressSpinnerModule,
-    MatChipsModule,
     CurrencyPipe,
     DatePipe,
+    MatChipsModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatTableModule,
 ];
 
 @Component({
@@ -40,6 +40,7 @@ const IMPORTS = [
     styles: [
         '.container { display: flex; justify-content: center; align-items: center; }',
         '.table-container { overflow-x: auto; }',
+        'section { padding: 1rem; background-color: white; }',
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
