@@ -1,1 +1,64 @@
-<p>transaction-form works!</p>
+<header>
+    <h1>Create Transaction</h1>
+</header>
+
+<section class="mat-elevation-z8">
+    <form class="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+        <div class="form-group">
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <input matInput type="text" formControlName="description" placeholder="Description" />
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Amount</mat-label>
+                <input matInput type="number" formControlName="amount" placeholder="Amount" required />
+                @if (form.invalid && (form.dirty || form.touched)) {
+                    <mat-error>Amount is required</mat-error>
+                }
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="outline">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="type" required>
+                    <mat-option value="income">Income</mat-option>
+                    <mat-option value="outcome">Outcome</mat-option>
+                </mat-select>
+                @if (form.invalid && (form.dirty || form.touched)) {
+                    <mat-error>Type is required</mat-error>
+                }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="date" required />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field class="example-form-field" appearance="outline">
+            <mat-label>Categories</mat-label>
+            <mat-chip-grid #reactiveChipGrid aria-label="Enter categories one by one" formControlName="categories">
+                @for (category of addedCategories(); track category) {
+                    <mat-chip-row (removed)="onRemoveCategory(category)">
+                        {{ category }}
+                        <button matChipRemove aria-label="Remove category from added categories">
+                            <mat-icon>cancel</mat-icon>
+                        </button>
+                    </mat-chip-row>
+                }
+            </mat-chip-grid>
+            <input
+                placeholder="New category..."
+                [matChipInputFor]="reactiveChipGrid"
+                (matChipInputTokenEnd)="onAddCategory($event)"
+            />
+        </mat-form-field>
+
+        <button mat-flat-button type="submit">Save</button>
+    </form>
+</section>
