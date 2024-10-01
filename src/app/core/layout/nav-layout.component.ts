@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal, OnInit, OnDestroy } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
     selector: 'fm-nav-layout',
@@ -28,7 +29,9 @@ import { MatIconModule } from '@angular/material/icon';
 export class NavLayoutComponent implements OnInit, OnDestroy {
     public isMobile = signal(false);
 
-    private breakpointObserver = inject(BreakpointObserver);
+    private readonly breakpointObserver = inject(BreakpointObserver);
+    private readonly authService = inject(AuthService);
+    private readonly router = inject(Router);
     private subscription?: Subscription;
 
     ngOnInit() {
@@ -39,5 +42,10 @@ export class NavLayoutComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscription?.unsubscribe();
+    }
+
+    public onLogout(): void {
+        this.authService.logout();
+        this.router.navigate(['/login']);
     }
 }
