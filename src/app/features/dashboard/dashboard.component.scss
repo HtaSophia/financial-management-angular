@@ -19,7 +19,14 @@
     }
 }
 
-.transactions-chart {
+.monthly-transactions {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-top: 2rem;
-    max-width: 500px;
+
+    .transactions-chart {
+        width: clamp(200px, 50%, 500px);
+    }
 }

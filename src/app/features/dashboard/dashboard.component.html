@@ -30,10 +30,19 @@
         </mat-card>
     </section>
 
-    <section class="transactions-chart">
+    <section class="monthly-transactions">
+        <div class="transactions-chart">
+            <mat-card>
+                <mat-card-content>
+                    <canvas id="canvas">{{ chart }}</canvas>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
         <mat-card>
             <mat-card-content>
-                <canvas id="canvas">{{ chart }}</canvas>
+                <button mat-stroked-button (click)="onDownloadCsv()">Download as CSV</button>
+                <button mat-stroked-button (click)="onDownloadPdf()">Download as PDF</button>
             </mat-card-content>
         </mat-card>
     </section>

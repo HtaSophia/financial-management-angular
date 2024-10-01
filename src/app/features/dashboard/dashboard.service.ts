@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
-import { MonthlyOverview, TotalOverview, TransactionsOverview } from './models/dashboard.model';
+import { MonthlyOverview, TotalOverview, TransactionsOverview } from './dashboard.types';
 
 import { formatDate, isCurrentMonth } from '../../shared/utils/date.util';
 import { TRANSACTIONS_DATA } from '../../shared/mocks/transactions.mock';
 import { Transaction } from '../../shared/models/transaction.model';
+import { FileDownloadService } from '../../shared/services/file-download/file-download.service';
 
 type TotalsByDate = Record<string, { income: number; outcome: number }>;
 
 @Injectable()
 export class DashboardService {
+    private readonly fileDownloadService = inject(FileDownloadService);
     public getTransactionsOverview(): Observable<TransactionsOverview> {
         const transactions = [...TRANSACTIONS_DATA];
 
@@ -19,6 +21,31 @@ export class DashboardService {
         };
 
         return of(overview).pipe(delay(1000));
+    }
+
+    public downloadTransactionsCsv(): void {
+        const transactions = TRANSACTIONS_DATA.map(({ id, ...transaction }) => ({
+            ...transaction,
+            date: formatDate(transaction.date),
+            categories: transaction.categories?.join(', '),
+        }));
+
+        const filename = `transactions_${new Date().getTime()}.csv`;
+        this.fileDownloadService.downloadAsCsv(transactions, filename);
+    }
+
+    public downloadTransactionsPdf(): void {
+        const headers = ['date', 'type', 'description', 'categories', 'amount'];
+        const data = TRANSACTIONS_DATA.map(({ id, amount, date, type, description, categories }) => ({
+            date: formatDate(date),
+            type,
+            description: description || 'N/A',
+            categories: categories?.join(', ') || 'N/A',
+            amount: `R$${amount}`,
+        }));
+
+        const filename = `transactions_${new Date().getTime()}.pdf`;
+        this.fileDownloadService.downloadAsPdf(headers, data, filename);
     }
 
     private getMonthlyOverview(transactions: Transaction[]): MonthlyOverview {

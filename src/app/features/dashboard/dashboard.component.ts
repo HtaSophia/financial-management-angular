@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, OnDestroy, WritableSignal, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Observable, Subscription } from 'rxjs';
 import Chart from 'chart.js/auto';
 
 import { DashboardService } from './dashboard.service';
-import { MonthlyOverview, TotalOverview, TransactionsOverview } from './models/dashboard.model';
+import { MonthlyOverview, TotalOverview, TransactionsOverview } from './dashboard.types';
 
 @Component({
     selector: 'fm-dashboard',
     standalone: true,
-    imports: [MatCardModule, MatProgressSpinnerModule, CurrencyPipe],
+    imports: [MatButtonModule, MatCardModule, MatProgressSpinnerModule, CurrencyPipe],
     providers: [DashboardService],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss',
@@ -39,6 +40,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         if (this.subscription) this.subscription.unsubscribe();
+    }
+
+    public onDownloadCsv(): void {
+        this.dashboardService.downloadTransactionsCsv();
+    }
+
+    public onDownloadPdf(): void {
+        this.dashboardService.downloadTransactionsPdf();
     }
 
     private getMonthlyOverview(): Observable<TransactionsOverview> {
