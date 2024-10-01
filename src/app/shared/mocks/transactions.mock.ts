@@ -3,7 +3,7 @@ import { Transaction } from '../models/transaction.model';
 export const TRANSACTIONS_DATA: Transaction[] = [
     {
         id: '1',
-        date: '2024-09-01T00:00:00.000-04:00',
+        date: '2024-10-01T00:00:00.000-04:00',
         type: 'income',
         amount: 10000,
         description: "Robert's company payment for the project ABC",
@@ -25,7 +25,7 @@ export const TRANSACTIONS_DATA: Transaction[] = [
     },
     {
         id: '4',
-        date: '2024-09-04T00:00:00.000-04:00',
+        date: '2024-10-04T00:00:00.000-04:00',
         type: 'outcome',
         amount: 440,
         description: 'Bought desk chair for office',
@@ -33,13 +33,13 @@ export const TRANSACTIONS_DATA: Transaction[] = [
     },
     {
         id: '5',
-        date: '2024-09-04T00:00:00.000-04:00',
+        date: '2024-10-04T00:00:00.000-04:00',
         type: 'income',
         amount: 550,
     },
     {
         id: '6',
-        date: '2024-09-06T00:00:00.000-04:00',
+        date: '2024-10-06T00:00:00.000-04:00',
         type: 'outcome',
         amount: 160,
     },
