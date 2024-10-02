@@ -11,6 +11,7 @@
                 matSort
                 [matSortActive]="sort().active"
                 [matSortDirection]="sort().direction"
+                [matSortDisableClear]="true"
                 (matSortChange)="onSortChange($event)"
             >
                 <ng-container matColumnDef="date">
