@@ -1,27 +1,122 @@
-# FinancialManagementAngular
+# Financial Management Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.6.
+## Descrição:
 
-## Development server
+**Desafio Técnico**: Desenvolver um Dashboard de Controle Financeiro.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+**Contexto**: Você foi contratado para construir um dashboard de controle financeiro que será utilizado por gerentes para monitorar receitas, despesas, e gerar relatórios mensas
 
-## Code scaffolding
+## Tecnologias:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+-   Base: Angular 18 com componentes Standalone e Signals
+-   Gerenciamento de estado: NgRx (store, effects)
+-   Design dos componentes: Angular Material
+-   Teste E2E: Cypress
+-   Download de arquivos: jspdf e export-to-csv
+-   Gráficos: chart.js
+-   Lint/Formatação de código: ESLint e Prettier
 
-## Build
+Instalação:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Clone o repositório:
 
-## Running unit tests
+```bash
+git clone https://github.com/HtaSophia/financial-management-angular.git
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+2. Instale as dependências:
 
-## Running end-to-end tests
+```bash
+cd financial-management-angular
+npm install
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+3. Execute a aplicação:
 
-## Further help
+```bash
+ng serve
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Abra o navegador e acesse [http://localhost:4200/](http://localhost:4200/)
+
+## Estrutura do projeto
+
+```
+cypress
+│
+├── e2e/
+│   └── transaction-form.cy.ts
+└── fixtures/
+
+src/
+│
+├── app/
+│   ├── core/
+│   │   ├── auth/
+│   │   │   ├── pages/
+│   │   │   │   └── login/
+│   │   │   ├── store
+│   │   │   ├── auth.service.ts
+│   │   │   ├── auth.guard.ts
+│   │   │   └── user.model.ts
+│   │   ├── layout/
+│   │   │   └── nav-layout
+│   ├── features/
+│   │   ├── dashboard/
+│   │   │   ├── dashboard.types.ts
+│   │   │   ├── dashboard.service.ts
+│   │   │   └── dashboard.component.ts
+│   │   ├── transactions/
+│   │   │   ├── transactions-form/
+│   │   │   ├── transaction-list/
+│   │   │   │   ├── components/
+│   │   │   │   │   └── transaction-table.component.ts
+│   │   │   │   └── transaction-list.component.ts
+│   │   │   └── shared/
+│   │   │   │   └── transaction.service.ts
+│   ├── shared/
+│   │   ├── mocks/
+│   │   ├── models/
+│   │   ├── services/
+│   │   ├── types/
+│   │   └── utils/
+│   ├── app.routes.ts   # Rotas
+│   └── app.component.ts
+│
+└── styles.scss
+```
+
+## Funcionalidades
+
+### Autenticação e Autorização
+
+-   Usuário pode realizar a autenticação na página de login
+    -   Atualmente, a autenticação é fictícia
+-   Após realizar a autenticação, o usuário será direcionado para a página do dashboard
+
+### Dashboard
+
+-   Contém o total de receitas e despesas
+-   Gráfico com as transações do mês atual
+-   Opções de download das transações em formato de CSV e PDF
+
+### transações
+
+-   Listagem de Transações ordenada pela data mais recente
+    -   Ordenação por data, tipo e valor
+    -   Paginação
+-   Criação de uma nova Transação
+
+## Teste
+
+### Unitários, Componenetes, Serviços, ...
+
+Cada componente, serviço, guard, entre outros, que é gerado com o Angular CLI é criado juntamento com um arquivo de teste. Esses testes ainda serão desenvolvidos.
+
+### E2E
+
+Para executar os testes E2E com Cypress:
+
+```bash
+npm run cy:open
+```
