@@ -16,7 +16,7 @@
 -   Gráficos: chart.js
 -   Lint/Formatação de código: ESLint e Prettier
 
-Instalação:
+## Instalação
 
 1. Clone o repositório:
 
