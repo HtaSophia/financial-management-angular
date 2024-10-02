@@ -47,19 +47,20 @@ const IMPORTS = [
 export class TransactionTableComponent implements OnChanges {
     @Input() public data: Transaction[] = [];
     @Input() public isLoading = false;
+    @Input() public total = 0;
     @Output() public pageChange = new EventEmitter<TablePageState>();
     @Output() public sortChange = new EventEmitter<TableSortState>();
 
     public readonly displayedColumns: string[] = TRANSACTION_TABLE_COLUMNS;
     public readonly pageSizeOptions: number[] = TRANSACTION_TABLE_PAGE_SIZE_OPTIONS;
     public page: WritableSignal<PageEvent> = signal({ pageIndex: 0, pageSize: 5, length: 0 });
-    public sort: WritableSignal<Sort> = signal({ active: '', direction: '' });
+    public sort: WritableSignal<Sort> = signal({ active: 'date', direction: 'desc' });
 
     private liveAnnouncer = inject(LiveAnnouncer);
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['data']) {
-            this.page.update((pageState) => ({ ...pageState, length: changes['data'].currentValue.length }));
+        if (changes['total']) {
+            this.page.update((pageState) => ({ ...pageState, length: changes['total'].currentValue }));
         }
     }
 
@@ -72,7 +73,7 @@ export class TransactionTableComponent implements OnChanges {
         }
 
         this.sort.set(sortState);
-        this.sortChange.emit(sortState);
+        this.sortChange.emit(sortState as TableSortState);
     }
 
     public onPageChange(pageEvent: PageEvent) {

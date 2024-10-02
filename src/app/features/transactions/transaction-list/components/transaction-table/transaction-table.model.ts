@@ -1,5 +1,4 @@
 import { PageEvent } from '@angular/material/paginator';
-import { Sort } from '@angular/material/sort';
 
 export interface TableColumn {
     name: string;
@@ -7,4 +6,7 @@ export interface TableColumn {
 }
 
 export type TablePageState = Pick<PageEvent, 'pageIndex' | 'pageSize'>;
-export type TableSortState = Sort;
+export interface TableSortState {
+    active: 'date' | 'type' | 'amount';
+    direction: 'asc' | 'desc';
+}

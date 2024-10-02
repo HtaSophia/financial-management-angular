@@ -9,6 +9,7 @@ import { TablePageState, TableSortState } from './components/transaction-table/t
 import { TransactionTableComponent } from './components/transaction-table/transaction-table.component';
 import { TransactionService } from '../shared/transaction.service';
 import { Transaction } from '../../../shared/models/transaction.model';
+import { PaginationResponse } from '../../../shared/types/pagination-response';
 
 @Component({
     selector: 'fm-transaction-list',
@@ -20,6 +21,7 @@ import { Transaction } from '../../../shared/models/transaction.model';
 export class TransactionListComponent implements OnDestroy {
     public transactions: WritableSignal<Transaction[]> = signal([]);
     public isLoading: WritableSignal<boolean> = signal(true);
+    public totalTransactions: WritableSignal<number> = signal(0);
 
     private transactionService = inject(TransactionService);
     private pagination: WritableSignal<TablePageState> = signal({ pageIndex: 0, pageSize: 5 });
@@ -35,7 +37,10 @@ export class TransactionListComponent implements OnDestroy {
                 this.isLoading.set(true);
                 if (this.subscription) this.subscription.unsubscribe();
                 this.subscription = this.getTransactions(page, sort).subscribe({
-                    next: (transactions) => this.transactions.set(transactions),
+                    next: ({ data, total }) => {
+                        this.transactions.set(data);
+                        this.totalTransactions.set(total);
+                    },
                     complete: () => this.isLoading.set(false),
                 });
             });
@@ -47,16 +52,17 @@ export class TransactionListComponent implements OnDestroy {
     }
 
     public onPageChange(pageEvent: TablePageState) {
-        console.log('PAGE', pageEvent);
         this.pagination.set(pageEvent);
     }
 
     public onSortChange(sortEvent: TableSortState) {
-        console.log('SORT', sortEvent);
         this.sort.set(sortEvent);
     }
 
-    private getTransactions(page: TablePageState, sort: TableSortState): Observable<Transaction[]> {
-        return this.transactionService.getAll();
+    private getTransactions(page: TablePageState, sort: TableSortState): Observable<PaginationResponse<Transaction>> {
+        return this.transactionService.getAll({
+            pagination: { page: page.pageIndex + 1, pageSize: page.pageSize },
+            sort: { selected: sort.active, direction: sort.direction },
+        });
     }
 }
