@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject, signal, OnInit, OnDestroy } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../auth/auth.service';
+import { logOut } from '../auth/store/auth.actions';
+import { selectUser } from '../auth/store/auth.reducer';
 
 @Component({
     selector: 'fm-nav-layout',
@@ -27,20 +29,18 @@ import { AuthService } from '../auth/auth.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavLayoutComponent implements OnInit, OnDestroy {
+    private readonly store = inject(Store);
+
     public readonly isMobile = signal(false);
-    public readonly username = signal('');
+    public readonly user = this.store.selectSignal(selectUser);
 
     private readonly breakpointObserver = inject(BreakpointObserver);
-    private readonly authService = inject(AuthService);
-    private readonly router = inject(Router);
     private subscription?: Subscription;
 
     ngOnInit() {
         this.subscription = this.breakpointObserver.observe(Breakpoints.Handset).subscribe(({ matches: isHandset }) => {
             this.isMobile.set(isHandset);
         });
-
-        this.username.set(this.authService.user?.username || '');
     }
 
     ngOnDestroy() {
@@ -48,7 +48,6 @@ export class NavLayoutComponent implements OnInit, OnDestroy {
     }
 
     public onLogout(): void {
-        this.authService.logout();
-        this.router.navigate(['/login']);
+        this.store.dispatch(logOut());
     }
 }

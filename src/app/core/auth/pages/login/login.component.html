@@ -29,7 +29,14 @@
                 }
             </mat-form-field>
 
-            <button type="submit" mat-flat-button (click)="onSubmit()">Sign in</button>
+            <button
+                type="submit"
+                mat-flat-button
+                (click)="onSubmit()"
+                [disabled]="emailControl.invalid || passwordControl.invalid"
+            >
+                Sign in
+            </button>
         </form>
     </section>
 </div>
