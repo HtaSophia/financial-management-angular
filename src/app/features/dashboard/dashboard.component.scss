@@ -19,14 +19,22 @@
     }
 }
 
-.monthly-transactions {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 1rem;
+.options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
     margin-top: 2rem;
 
-    .transactions-chart {
-        width: clamp(200px, 50%, 500px);
+    mat-card-content {
+        margin-top: 2rem;
+
+        button {
+            margin: 0.5rem;
+        }
     }
+}
+
+.transactions-chart {
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 500px;
 }
