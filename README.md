@@ -100,7 +100,7 @@ src/
 -   Gráfico com as transações do mês atual
 -   Opções de download das transações em formato de CSV e PDF
 
-### transações
+### Transações
 
 -   Listagem de Transações ordenada pela data mais recente
     -   Ordenação por data, tipo e valor
