@@ -16,6 +16,7 @@ module.exports = tseslint.config(
         ],
         processor: angular.processInlineTemplates,
         rules: {
+            '@typescript-eslint/no-namespace': ['error', { allowDeclarations: true }],
             '@typescript-eslint/no-unused-vars': [
                 'error',
                 {
