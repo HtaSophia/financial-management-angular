@@ -49,7 +49,7 @@ export class TransactionFormComponent implements OnDestroy {
         this.form = this.fb.group({
             date: ['', [Validators.required]],
             description: '',
-            amount: [0, [Validators.required, Validators.min(0)]],
+            amount: ['', [Validators.required, Validators.min(0)]],
             categories: [''],
             type: ['', [Validators.required]],
         });
