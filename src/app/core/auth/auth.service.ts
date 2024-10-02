@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from './user.model';
+import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -10,9 +11,10 @@ export class AuthService {
         return null;
     }
 
-    public login(email: string): void {
-        const username = email.split('@')[0];
-        localStorage.setItem('user', JSON.stringify({ username, email }));
+    public login(email: string): Observable<User> {
+        const loggedUser = { username: email.split('@')[0], email };
+        localStorage.setItem('user', JSON.stringify(loggedUser));
+        return of(loggedUser);
     }
 
     public logout(): void {
